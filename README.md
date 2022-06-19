@@ -1,5 +1,5 @@
 # vscode开发配置
-## 插件
+## 插件篇
 ### remote ssh
 让vscode可以远程访问linux机器
 > 由于有些linux服务器不能访问外网或者网速比较慢，因此可以选择离线方式配置
@@ -7,6 +7,28 @@
 2. 下载软件包
 https://update.code.visualstudio.com/commit:{hash_id}/server-linux-x64/stable
 3. 将下载的东西解压到/root/.vscode-server/bin/目录
+
+
+
+> 免密码
+```sh
+ssh-keygen
+```
+c盘用户目录下的： .ssh\id_rsa.pub
+复制内容到远程linux的
+/root/.ssh/authorized_keys下，如果没有authorized_keys文件，那就创建一个即可
+
+
+
+
+
+### MySQL
+> 请注意作者名字是Weijan Chen
+
+
+
+
+
 
 
 ### background
@@ -130,4 +152,74 @@ https://update.code.visualstudio.com/commit:{hash_id}/server-linux-x64/stable
     "security.workspace.trust.untrustedFiles": "open",
     "git.ignoreLegacyWarning": true
 }
+```
+
+
+### vscode插件开发笔记
+#### 安装脚手架工具
+```sh
+npm install -g yo generator-code
+```
+#### 创建工程
+```sh
+yo code
+```
+
+> 嵌入vue打包后的工程
+#### extension.ts文件代码
+```js
+import * as vscode from 'vscode';
+import * as path from 'path';
+import * as fs from 'fs';
+
+export function activate(context: vscode.ExtensionContext) {
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand('myWebview', () => {
+            // 创建并显示一个新的webview
+            const panel = vscode.window.createWebviewPanel(
+                'Test', // 标识webview的类型
+                'webview', // 展示给用户的面板的标题
+                vscode.ViewColumn.One, // 显示webview面板以编辑器新列的方式.
+                {
+                    enableScripts: true
+                } // webview其他的选项
+            );
+            //加载本地html页面
+            let srcPath = path.join(context.extensionPath, 'dist');
+            const srcPathUri = vscode.Uri.file(srcPath);
+            const baseUri = panel.webview.asWebviewUri(srcPathUri);
+            const indexPath = path.join(srcPath, 'index.html');
+            var indexHtml = fs.readFileSync(indexPath, "utf8");
+            indexHtml = indexHtml.replace(/((src|href)=("|'))(.+?\.(css|js))\b/gi, "$1" + 
+            baseUri.toString() + "/$4");
+
+            console.log(indexHtml)
+            panel.webview.html = indexHtml;
+
+        })
+    );
+
+}
+
+// this method is called when your extension is deactivated
+export function deactivate() { }
+
+```
+
+#### package.json
+```json
+	"activationEvents": [
+		"onCommand:myWebview"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "myWebview",
+				"title": "webview",
+				"category": "webview"
+			}
+		]
+	}
 ```
