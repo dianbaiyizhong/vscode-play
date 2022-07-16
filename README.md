@@ -1,6 +1,6 @@
-# vscode开发配置
+# 玩转vscode
 ## 插件篇
-### remote ssh
+###### remote ssh
 让vscode可以远程访问linux机器
 > 由于有些linux服务器不能访问外网或者网速比较慢，因此可以选择离线方式配置
 1. 【帮助】-》【关于】查看hash_id
@@ -22,7 +22,7 @@ c盘用户目录下的： .ssh\id_rsa.pub
 
 
 
-### MySQL
+###### MySQL
 > 请注意作者名字是Weijan Chen
 
 
@@ -31,7 +31,7 @@ c盘用户目录下的： .ssh\id_rsa.pub
 
 
 
-### background
+###### background
 ```json
 {
     "glassit.alpha":220,
@@ -155,18 +155,19 @@ c盘用户目录下的： .ssh\id_rsa.pub
 ```
 
 
-### vscode插件开发笔记
-#### 安装脚手架工具
+## vscode插件开发笔记
+###### 安装脚手架工具
 ```sh
 npm install -g yo generator-code
 ```
-#### 创建工程
+###### 创建工程
 ```sh
 yo code
 ```
 
-> 嵌入vue打包后的工程
-#### extension.ts文件代码
+
+###### extension.ts文件代码
+
 ```js
 import * as vscode from 'vscode';
 import * as path from 'path';
@@ -207,7 +208,7 @@ export function deactivate() { }
 
 ```
 
-#### package.json
+###### package.json
 ```json
 	"activationEvents": [
 		"onCommand:myWebview"
@@ -223,3 +224,9 @@ export function deactivate() { }
 		]
 	}
 ```
+
+> 具体可以查看工程vscode-extension
+
+###### 调试方式
+1. 按F5即可打开调试页面
+2. 待补充
