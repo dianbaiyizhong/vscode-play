@@ -6,7 +6,8 @@
 1. 【帮助】-》【关于】查看hash_id
 2. 下载软件包
 https://update.code.visualstudio.com/commit:{hash_id}/server-linux-x64/stable
-3. 将下载的东西解压到/root/.vscode-server/bin/目录
+3.在/root/.vscode-server/bin/下新建一个文件夹，名字叫{hash_id}
+3. 将下载的东西解压到/root/.vscode-server/bin/{hash_id}目录下即可
 
 
 
