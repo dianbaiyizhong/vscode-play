@@ -231,3 +231,50 @@ export function deactivate() { }
 ###### 调试方式
 1. 按F5即可打开调试页面
 2. 待补充
+
+
+
+
+
+
+
+## 安装zsh终端-自动补全
+
+###### 安装zsh
+
+```bash
+sudo apt-get install -y zsh
+```
+
+###### 安装oh-my-zsh
+
+```sh
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+```
+
+###### 安装自动补全插件
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh}/plugins/zsh-autosuggestions
+```
+
+> cd /root/.oh-my-zsh/plugins  若网络不通畅，你可以直接把插件放在这个目录下
+
+
+```bash
+vim ~/.zshrc
+```
+
+```sh
+plugins=(git zsh-autosuggestions)
+```
+
+```bash
+source  ~/.zshrc
+```
+
+###### 设置一下主题
+```bash
+ZSH_THEME="agnoster"
+```
+
